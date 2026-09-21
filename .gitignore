@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+test.db
+routes.csv
+
+# Node / Vite
+node_modules/
+dist/
+.vite/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
