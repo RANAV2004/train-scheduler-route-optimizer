@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import api from "../api";
 import {
- ScatterChart, Scatter, LineChart, Line,
-   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
+  ScatterChart, Scatter, LineChart, Line,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
 } from "recharts";
-
 
 const INK = "#111827";      
 const GRID = "#d1d5db";     
@@ -12,6 +11,7 @@ const AXIS = "#374151";
 const INK_SOFT = "#9ca3af"; 
 
 const AVG_SPEED_KMPH = 65;  
+
 
 function routeSeries(result) {
   if (!result || !result.path.length) return [];
@@ -104,12 +104,16 @@ export default function RouteOptimizer() {
       {result && (
         <div className="route-viz" style={{ marginBottom: 18 }}>
           <h3>Optimized Route</h3>
-          <div className="route-path">
+          <div className="route-map">
             {result.path.map((city, i) => (
-              <span key={i}>
-                {city}
-                {i < result.path.length - 1 && <span className="arrow">→</span>}
-              </span>
+              <div className="route-node" key={i}>
+                <div className="station">{city}</div>
+                {i < result.path.length - 1 && (
+                  <div className="connector">
+                    <span>{result.hops[i].distance} km</span>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
           <div className="route-metrics">
@@ -127,7 +131,7 @@ export default function RouteOptimizer() {
             </div>
           </div>
 
-          
+         
           <h3 style={{ marginTop: 8 }}>Distance &amp; Time Along the Route</h3>
           <ResponsiveContainer width="100%" height={260}>
             <LineChart data={routeSeries(result)} margin={{ top: 10, right: 20, bottom: 10, left: 0 }}>
@@ -171,7 +175,6 @@ export default function RouteOptimizer() {
           </ResponsiveContainer>
         </div>
 
-        
         <div className="route-viz">
           <h3>Distance to Each City — Line (from {source})</h3>
           <ResponsiveContainer width="100%" height={280}>
